@@ -35,8 +35,8 @@ public class GamePanel extends JPanel implements ActionListener {
 	static final int UNIT_SIZE = 25;
 	// cuantos objetos caben en mi panel
 	static final int GAME_UNITS = (SCREEN_WIDTH * SCREEN_HEIGHT) / UNIT_SIZE;
-	// speed of games
-	static final int DELAY = 75;
+	// speed of games cuanto mas alto sea el valor, mas lento se movera la serpiente
+	static int DELAY = 100;
 
 	// snake body
 	// final int x[] = new int[GAME_UNITS];
@@ -329,6 +329,10 @@ public class GamePanel extends JPanel implements ActionListener {
 		// checkea level
 		if (this.applesEaten > this.LEVEL * this.LEVEL_MULTIPLIER) {
 			this.LEVEL++;
+			if(DELAY>20){
+				DELAY=DELAY-5;
+			}
+			
 
 		}
 		

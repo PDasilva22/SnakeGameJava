@@ -18,6 +18,7 @@ public class SnakeGame {
 	}
 	public static void restartGame() {
 		frame.dispose();
+		GamePanel.DELAY=100;
 		frame=new GameFrame();
 		
 	}
