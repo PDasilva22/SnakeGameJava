@@ -11,6 +11,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.annotation.Documented;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -276,6 +281,13 @@ public class GamePanel extends JPanel implements ActionListener {
 
 			if (manzana.getX() == this.snake.getFirst().getX() && manzana.getY() == this.snake.getFirst().getY()) {
 
+				//escribo log de movimiento
+				try {
+					writingMovementLog(this.snake.getFirst().getX(),this.snake.getFirst().getY(),manzana.getX(),manzana.getY());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				this.bodyParts++;
 				this.applesEaten++;
 				// quito la manzana comida
@@ -417,6 +429,34 @@ public class GamePanel extends JPanel implements ActionListener {
 		// restar button
 		this.boton.setVisible(true);
 
+	}
+
+
+
+	//Este metodo registra un log de los movimientos de la serpiente, la idea es recoger datos para entrenar IA
+	//se ejecutara cada vez que se coma una manzana 
+	private void writingMovementLog(int snakeX, int snakeY,int foodX, int foodY ) throws IOException{
+
+		File file = new File("snake_log.txt");
+		FileWriter writer = new FileWriter(file,true);
+		BufferedWriter bf = new BufferedWriter(writer);
+
+/* 
+		int snakeX = snake.getFirst().x;
+		int snakeY = snake.getFirst().y;
+		int foodX = this.appleList.get(0).x;
+		int foodY = this.appleList.get(0).y;
+*/
+
+		char direction = this.direction;
+
+		//escribiendo datos
+		bf.newLine();
+		bf.write(snakeX + "," + snakeY + "," + foodX + "," + foodY + "," + direction + "\n");
+		bf.close();
+		writer.close();
+
+		
 	}
 
 	// moverse
